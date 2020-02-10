@@ -6,6 +6,6 @@ echo GOTO : http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/service
 
 kubectl port-forward  \
      $(kubectl get pods -l k8s-app=kubernetes-dashboard -o jsonpath="{.items[0].metadata.name}" -n kubernetes-dashboard) \
-     --address 127.0.0.1 8001:8443 \
+     --address 0.0.0.0 8443:8443 \
      -n kubernetes-dashboard
     

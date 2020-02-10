@@ -8,6 +8,6 @@ for i in {1..5}; do
     sleep 7
 done
 
-kubectl apply -f admin_user.yaml
+kubectl apply -f https://raw.githubusercontent.com/justindav1s/k8s_vagrant/master/dashboard/admin_user.yaml
 
 kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
