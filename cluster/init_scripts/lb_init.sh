@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+rm -rf original-ks.cfg
+
 # Install the required packages   
 yum install haproxy dnsmasq -y
 
@@ -166,6 +169,7 @@ nmcli con mod 'System eth0' ipv4.dns 192.168.20.10
 nmcli con mod 'System eth0' ipv4.ignore-auto-dns yes
 nmcli con down 'System eth0' && nmcli con up 'System eth0'
 
+touch DONE
 echo DONE. Rebooting
 
 reboot

@@ -1,11 +1,13 @@
 #!/bin/bash
 
-kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+PROJ_HOME=$(pwd)/..
 
-echo GOTO : http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ 
+kubectl --kubeconfig=${PROJ_HOME}/admin.config -n kubernetes-dashboard describe secret $(kubectl --kubeconfig=${PROJ_HOME}/admin.config -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
 
-kubectl port-forward  \
-     $(kubectl get pods -l k8s-app=kubernetes-dashboard -o jsonpath="{.items[0].metadata.name}" -n kubernetes-dashboard) \
+echo GOTO : 'https://localhost:8443/#/login'
+
+kubectl --kubeconfig=${PROJ_HOME}/admin.config port-forward  \
+     $(kubectl --kubeconfig=${PROJ_HOME}/admin.config get pods -l k8s-app=kubernetes-dashboard -o jsonpath="{.items[0].metadata.name}" -n kubernetes-dashboard) \
      --address 0.0.0.0 8443:8443 \
      -n kubernetes-dashboard
     

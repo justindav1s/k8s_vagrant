@@ -5,3 +5,4 @@
 **/*.out
 certs_config/ca-config.json
 certs_config/encryption-config.yaml
+admin.config
