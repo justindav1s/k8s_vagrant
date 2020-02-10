@@ -13,3 +13,7 @@ cd ${PROJ_HOME}/kubernetes/workers
 ./setup.sh
 sleep 10
 ./status.sh
+
+# Setup Ingress
+cd ${PROJ_HOME}/ingress
+./setup.sh

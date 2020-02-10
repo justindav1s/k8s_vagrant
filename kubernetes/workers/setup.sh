@@ -24,17 +24,6 @@ for i in {1..5}; do
 done
 
 
-echo -e "\n\n*** Configuring Workers : Ingress ....."
-
-kubectl --kubeconfig=${PROJ_HOME}/admin.config apply -f https://haproxy-ingress.github.io/resources/haproxy-ingress.yaml
-kubectl --kubeconfig=${PROJ_HOME}/admin.config label node worker1 role=ingress-controller
-
-for i in {1..5}; do 
-    kubectl --kubeconfig=${PROJ_HOME}/admin.config get pods -o wide -n ingress-controller
-    sleep 5
-done
-
-
 echo -e "\n\n*** Configuring Workers : Dashboard ....."
 kubectl --kubeconfig=${PROJ_HOME}/admin.config apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
 
