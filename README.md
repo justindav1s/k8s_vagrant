@@ -1,5 +1,6 @@
 # Kubernetes on with Vagrant, Virtualox and Centos7
 
+https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
 
 ## Dashboard Portforwarding
 kubectl --kubeconfig=admin.config port-forward  \

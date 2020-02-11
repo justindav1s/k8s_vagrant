@@ -3,7 +3,7 @@
 
 PROJ_HOME=$(pwd)/..
 
-SERVERS="lb master1 worker1"
+SERVERS="lb master1 worker1 worker2 worker3"
 ACTION=$@
 
 cd ${PROJ_HOME}/cluster

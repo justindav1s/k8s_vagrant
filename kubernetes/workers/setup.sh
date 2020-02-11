@@ -5,22 +5,28 @@ echo -e "\n\n*** Configuring Workers ....."
 
 PROJ_HOME=$(pwd)/../..
 
-COMMAND=$(ssh root@192.168.20.11 'kubeadm token create --print-join-command | grep kubeadm')
-echo COMMAND : $COMMAND
 
-ssh root@192.168.20.21 $COMMAND
+for WORKER_IP in 192.168.20.21 192.168.20.22 192.168.20.23; do
 
-kubectl --kubeconfig=${PROJ_HOME}/admin.config get nodes
+  echo -e "\n\n*** Setting up worker : ${WORKER_IP}"
+  COMMAND=$(ssh root@192.168.20.11 'kubeadm token create --print-join-command | grep kubeadm')
+  echo COMMAND : $COMMAND
 
-ssh root@192.168.20.21 "sed -i.bak 's/KUBELET_EXTRA_ARGS/KUBELET_EXTRA_ARGS --node-ip=192.168.20.21/' /usr/lib/systemd/system/kubelet.service.d/10-kubeadm.conf"
-ssh root@192.168.20.21 "cat /usr/lib/systemd/system/kubelet.service.d/10-kubeadm.conf"
-ssh root@192.168.20.21 "systemctl daemon-reload"
-ssh root@192.168.20.21 "systemctl restart kubelet"
-ssh root@192.168.20.21 "systemctl status kubelet"
+  ssh root@${WORKER_IP} $COMMAND
 
-for i in {1..5}; do 
-    kubectl --kubeconfig=${PROJ_HOME}/admin.config get nodes -o wide
-    sleep 10
+  kubectl --kubeconfig=${PROJ_HOME}/admin.config get nodes
+
+  ssh root@${WORKER_IP} "sed -i.bak 's/KUBELET_EXTRA_ARGS/KUBELET_EXTRA_ARGS --node-ip=${WORKER_IP}/' /usr/lib/systemd/system/kubelet.service.d/10-kubeadm.conf"
+  ssh root@${WORKER_IP} "cat /usr/lib/systemd/system/kubelet.service.d/10-kubeadm.conf"
+  ssh root@${WORKER_IP} "systemctl daemon-reload"
+  ssh root@${WORKER_IP} "systemctl restart kubelet"
+  ssh root@${WORKER_IP} "systemctl status kubelet"
+
+  for i in {1..5}; do 
+      kubectl --kubeconfig=${PROJ_HOME}/admin.config get nodes -o wide
+      sleep 10
+  done
+
 done
 
 

@@ -32,8 +32,8 @@ echo install flannel
 kubectl --kubeconfig=${PROJ_HOME}/admin.config apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 echo waiting for flannel to come up
-for i in {1..5}; do 
+for i in {1..7}; do 
     kubectl --kubeconfig=${PROJ_HOME}/admin.config get nodes -o wide
     kubectl --kubeconfig=${PROJ_HOME}/admin.config get pods --all-namespaces
-    sleep 5
+    sleep 7
 done
