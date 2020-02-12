@@ -31,6 +31,10 @@ kubectl --kubeconfig=${PROJ_HOME}/admin.config get pods --all-namespaces
 echo install flannel
 kubectl --kubeconfig=${PROJ_HOME}/admin.config apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
+echo *** Patch Flannel daemonset to use eth1 .....
+kubectl --kubeconfig=${PROJ_HOME}/admin.config patch daemonset kube-flannel-ds-amd64 -n kube-system \
+  --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/3", "value": "--iface=eth1"}]'
+
 echo waiting for flannel to come up
 for i in {1..7}; do 
     kubectl --kubeconfig=${PROJ_HOME}/admin.config get nodes -o wide
