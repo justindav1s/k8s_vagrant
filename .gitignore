@@ -6,3 +6,5 @@
 certs_config/ca-config.json
 certs_config/encryption-config.yaml
 admin.config
+**/tls.crt
+**/tls.key
