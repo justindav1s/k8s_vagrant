@@ -4,6 +4,10 @@ This repo deploys kubernetes into a cloud composed of Vagrant and VirtualBox and
 
 As currently configured it spins up 7 vms, a load-balancer, 3 controllers and 3 workers. As currently configured it uses 36GB of RAM, but could be confiured to use much less. See the settings in [cluster/vagrantFile](cluster/vagrantFile).
 
+   * [bin](bin) : scripts that start the cloud and deploy Kubernetes
+     * cluster.sh [up|halt|destroy .....] : spin up the cloud
+     * deploy.sh : deploy kubernetes
+     * snapshot_create.sh : create a vitrulbox snapshot
    * [cluster](cluster/) : contains vagrant and script resources to to spin up the VM cluster, with static IP addresses
       * 192.168.20.10 : haproxy load-balancer and dnsmasq DNS server
       * 192.168.20.[11-13] : kubernetes contollers hosting the API
